@@ -1,40 +1,42 @@
+# Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic -Iinc -I/usr/include/SDL2 -g
-LDFLAGS = -lSDL2 -lSDL2_image -lm
 
-SRC = src/main.c src/rendering.c src/raycasting.c src/collision_detection.c src/map_parser.c src/input_handling.c src/texture_handling.c
-OBJ = $(SRC:.c=.o)
+# Directories
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
 
-all: my_fps_game
+# Source files
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 
-my_fps_game: $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LDFLAGS)
+# Object files
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
+# Executable
+EXEC = $(BIN_DIR)/my_fps_game
+
+# Libraries
+LIBS = -lSDL2 -lSDL2_image -lm
+
+# Default target
+all: $(EXEC)
+
+# Link the executable
+$(EXEC): $(OBJ_FILES)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+
+# Compile source files into object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+# Clean up
 clean:
-	rm -f $(OBJ) my_fps_game
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Create bin directory if it doesn't exist
+$(BIN_DIR):
+	@mkdir -p $(BIN_DIR)
 
-clean:
-	rm -f $(OBJ) $(EXEC)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f $(OBJ) $(EXEC)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f $(OBJ) $(EXEC)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f $(OBJ) $(EXEC)
-
-.PHONY: clean
+.PHONY: all clean
