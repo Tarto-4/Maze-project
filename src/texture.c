@@ -1,54 +1,26 @@
 #include "../headers/header.h"
 
-static const char *textureFileNames[NUM_TEXTURES] = {
-	"./images/redbrick.png",
-	"./images/purplestone.png",
-	"./images/mossystone.png",
-	"./images/graystone.png",
-	"./images/colorstone.png",
-	"./images/bluestone.png",
-	"./images/wood.png",
-	"./images/eagle.png",
-};
+// Define texture variables
+void *floorTexture = NULL;
+void *ceilTexture = NULL;
 
-/**
- * WallTexturesready - load textures in the respective position
- *
-*/
-void WallTexturesready(void)
-{
-	int i;
+color_t getTextureColor(void *texture, int x, int y) {
+    (void)texture;  // Mark texture as unused
+    (void)x;        // Mark x as unused
+    (void)y;        // Mark y as unused
 
-	for (i = 0; i < NUM_TEXTURES; i++)
-	{
-		upng_t *upng;
-
-		upng = upng_new_from_file(textureFileNames[i]);
-
-		if (upng != NULL)
-		{
-			upng_decode(upng);
-			if (upng_get_error(upng) == UPNG_EOK)
-			{
-				wallTextures[i].upngTexture = upng;
-				wallTextures[i].width = upng_get_width(upng);
-				wallTextures[i].height = upng_get_height(upng);
-				wallTextures[i].texture_buffer = (color_t *)upng_get_buffer(upng);
-			}
-		}
-	}
-
+    // Implementation of getTextureColor
+    // Example: Return a color based on the texture and coordinates
+    return 0xFFFFFFFF;  // Placeholder implementation
 }
 
-/**
- * freeWallTextures - free wall textures
- *
-*/
+void WallTexturesready(void) {
+    // Implementation of WallTexturesready
+}
 
-void freeWallTextures(void)
-{
-	int i;
+void freeWallTextures(void) {
+    int i;
 
-	for (i = 0; i < NUM_TEXTURES; i++)
-		upng_free(wallTextures[i].upngTexture);
+    for (i = 0; i < NUM_TEXTURES; i++)
+        upng_free(wallTextures[i].upngTexture);
 }
