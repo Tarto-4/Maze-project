@@ -58,6 +58,9 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "C_Cpp.errorSquiggles": "enabled",
   "files.associations": {
-    "input_handling.h": "c"
+    "input_handling.h": "c",
+    "raycasting.h": "c",
+    "map_parser.h": "c",
+    "game.h": "c"
   }
 }
